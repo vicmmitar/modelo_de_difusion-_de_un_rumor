@@ -1,0 +1,161 @@
+{UTF-8}
+factor de credibilidad=
+	0.1
+	~	Dmnl [0,1,0.01]
+	~		|
+
+Personas que conocen el rumor= INTEG (
+	Propagacion del rumor,
+		1)
+	~	personas [?,500]
+	~		|
+
+Propagacion del rumor=
+	IF THEN ELSE(Personas que conocen el rumor+(contactos que propagan el rumor*tasa de contactos\
+		*Personas que no conocen el rumor
+	*Personas que conocen el rumor)<Poblacion, contactos que propagan el rumor*tasa de contactos\
+		*Personas que no conocen el rumor
+	*Personas que conocen el rumor, Poblacion-Personas que conocen el rumor)
+	~	personas/Day
+	~		|
+
+credibilidad=
+	IF THEN ELSE(acceso a redes sociales>0 , 0.03, factor de credibilidad)
+	~	Dmnl [0,1,0.01]
+	~		|
+
+acceso a redes sociales=
+	0.65
+	~	1/Day [0,0.9,0.01]
+	~		|
+
+contactos de boca a boca=
+	0.02
+	~	1/Day [0,1,0.01]
+	~		|
+
+contactos que propagan el rumor=
+	credibilidad*desicion de transmitir
+	~	1/personas [0,1,0.01]
+	~		|
+
+desicion de transmitir=
+	0.5
+	~	1/personas [0,1,0.01]
+	~		|
+
+tasa de contactos=
+	contactos de boca a boca+acceso a redes sociales
+	~	1/Day [0,1,0.01]
+	~		|
+
+Personas que no conocen el rumor=
+	MAX(0, Poblacion-Personas que conocen el rumor)
+	~	personas
+	~		|
+
+Poblacion=
+	500
+	~	personas [500,100000,500]
+	~		|
+
+********************************************************
+	.Control
+********************************************************~
+		Parámetros de control de simulación
+	|
+
+FINAL TIME  = 30
+	~	Day
+	~	El período final de la simulación.
+	|
+
+INITIAL TIME  = 0
+	~	Day
+	~	El período inicial de la simulación.
+	|
+
+SAVEPER  = 
+        TIME STEP
+	~	Day [0,?]
+	~	La frecuencia con la que se almacena la salida.
+	|
+
+TIME STEP  = 1
+	~	Day [0,?]
+	~	El "Incremento de tiempo" para la simulación.
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Pantalla 1
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|255-255-255|96,96,150,0
+10,1,Personas que conocen el rumor,704,77,60,19,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+12,2,48,360,73,12,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,3,5,1,4,0,0,22,0,0,0,-1--1--1,,1|(579,76)|
+1,4,5,2,100,0,0,22,0,0,0,-1--1--1,,1|(433,76)|
+11,5,48,508,76,8,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,6,Propagacion del rumor,508,101,52,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,7,tasa de contactos,332,176,55,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,8,contactos que propagan el rumor,460,208,59,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,9,Personas que no conocen el rumor,740,220,56,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,10,Poblacion,585,309,32,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,11,10,9,1,0,0,0,0,64,0,-1--1--1,,1|(673,276)|
+1,12,9,6,1,0,0,0,0,64,0,-1--1--1,,1|(640,140)|
+1,13,1,9,1,0,0,0,0,64,0,-1--1--1,,1|(811,153)|
+1,14,1,6,1,0,0,0,0,64,0,-1--1--1,,1|(587,16)|
+1,15,7,6,1,0,0,0,0,64,0,-1--1--1,,1|(420,148)|
+1,16,8,6,1,0,0,0,0,64,0,-1--1--1,,1|(491,152)|
+10,17,acceso a redes sociales,140,209,48,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,18,17,7,1,0,0,0,0,64,0,-1--1--1,,1|(279,200)|
+10,19,credibilidad,292,260,37,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,20,desicion de transmitir,376,304,36,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,21,19,8,1,0,0,0,0,64,0,-1--1--1,,1|(371,248)|
+1,22,20,8,1,0,0,0,0,64,0,-1--1--1,,1|(428,255)|
+10,23,contactos de boca a boca,95,156,59,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,24,23,7,0,0,0,0,0,64,0,-1--1--1,,1|(208,164)|
+1,25,17,19,1,0,0,0,0,64,0,-1--1--1,,1|(217,272)|
+10,26,factor de credibilidad,192,300,37,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,27,26,19,1,0,0,0,0,64,0,-1--1--1,,1|(260,292)|
+1,28,10,6,0,0,0,0,0,64,0,-1--1--1,,1|(549,215)|
+1,30,29,6,0,0,0,0,0,64,0,-1--1--1,,1|(289,79)|
+1,32,31,6,1,0,0,0,0,64,0,-1--1--1,,1|(320,108)|
+///---\\\
+:L<%^E!@
+1:SIM3.vdfx
+1:SIM2.vdfx
+1:SIM1.vdfx
+1:Actual.vdfx
+4:Time
+5:Personas que conocen el rumor
+9:SIM3
+19:150,0
+24:0
+25:30
+26:30
+23:0
+15:0,0,0,0,0,0
+27:0,
+34:0,
+42:1
+72:0
+73:0
+35:Fecha
+36:YYYY-MM-DD
+37:2000
+38:1
+39:1
+40:4
+41:0
+95:0
+96:0
+77:0
+78:0
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:
